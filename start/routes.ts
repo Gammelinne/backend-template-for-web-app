@@ -17,11 +17,12 @@
 | import './routes/customer'
 |
 */
-
 import Route from '@ioc:Adonis/Core/Route'
-import Database from '@ioc:Adonis/Lucid/Database'
+//import Database from '@ioc:Adonis/Lucid/Database'
 
-Route.get('posts', 'PostsController.index')
-Route.get('/users', async () => {
-  return Database.from('posts').select('*')
-})
+// User routes
+Route.post('/register', 'UsersController.register')
+Route.post('/login', 'UsersController.login')
+
+// Post routes
+Route.get('/posts', 'PostsController.index').middleware('auth')

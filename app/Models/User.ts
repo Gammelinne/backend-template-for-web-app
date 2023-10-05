@@ -18,7 +18,7 @@ export default class User extends BaseModel {
   public rememberMeToken?: string
 
   @column({ columnName: 'is_admin' })
-  public isAdmin: boolean
+  public is_admin: boolean
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
