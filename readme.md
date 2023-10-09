@@ -48,7 +48,7 @@ The template is specifically designed to handle user management, providing a rob
    - Addition of password recovery functionality.
 
 ### Localization
-3. **I18n for Multilingual Responses**
+1. **I18n for Multilingual Responses**
    - Integration of language management for responses.
 
 ## Configuration and Usage
