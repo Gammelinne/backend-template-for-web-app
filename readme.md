@@ -1,55 +1,60 @@
-# FR
+# Project Name
 
-# Nom du Projet
+Brief and relevant project description.
 
-Description courte et pertinente du projet.
+## Current Features
 
-## Fonctionnalités Actuelles
+### Authentication and Security
+1. **Middleware-based Authentication**
+   - Implementation of a secure authentication system.
 
-1. **Authentification via Middleware**
-   - Mise en place d'un système d'authentification sécurisé.
+2. **Hashed Passwords**
+   - Secure storage of passwords using hashing.
 
-2. **Mot de Passe Haché**
-   - Stockage sécurisé des mots de passe grâce à la fonction de hachage.
+### Testing
+3. **Cypress Automated Tests**
+   - Integration of automated tests using Cypress.
 
-3. **Tests via Cypress**
-   - Intégration des tests automatisés avec Cypress.
-
-4. **Prettier Implementé**
-   - Utilisation de Prettier pour formater automatiquement le code.
+### Code Quality
+4. **Prettier Integration**
+   - Use of Prettier for automatic code formatting.
 
 5. **Linting**
-   - Intégration d'un outil de linting pour assurer l'uniformisation du code.
+   - Integration of a linting tool to ensure code uniformity.
 
-6. **Migrations pour Tables**
-   - Création des tables : users, posts, api_token via migrations.
+### Database Management
+6. **Migration for Table Creation**
+   - Creation of tables (users, posts, api_token) through migrations.
 
-7. **Seeder pour Tests Locaux**
-   - Utilisation de seeders avec des factories pour faciliter les tests locaux.
+7. **Seeder for Local Testing**
+   - Use of seeders with factories to facilitate local testing.
 
-8. **Modèle MVC et Fichiers de Validation**
-   - Organisation du projet selon le modèle MVC.
-   - Fichiers de validation pour assurer le bon type de données.
+### Project Organization
+8. **MVC Model and Validation Files**
+   - Project organization based on the MVC model.
+   - Validation files to ensure proper data types.
 
-## Fonctionnalités en Développement
+## Features in Development
 
-1. **Vérification par Mail**
-   - Implémentation de la vérification des emails.
+### Email Verification and Password Recovery
+1. **Email Verification**
+   - Implementation of email verification.
 
-2. **Réinitialisation de Mot de Passe**
-   - Ajout de la fonctionnalité de récupération de mot de passe.
+2. **Password Reset**
+   - Addition of password recovery functionality.
 
-3. **I18n pour Réponses Multilingues**
-   - Intégration de la gestion des langues pour les réponses.
+### Localization
+3. **I18n for Multilingual Responses**
+   - Integration of language management for responses.
 
-## Configuration et Utilisation
+## Configuration and Usage
 
-Explique ici comment configurer et utiliser le projet. Assure-toi d'inclure les dépendances et les étapes d'installation.
+Explain how to configure and use the project. Include dependencies and installation steps.
 
-## Contribuer
+## How to Contribute
 
-Explique comment les gens peuvent contribuer à ton projet, que ce soit en signalant des problèmes, en proposant des fonctionnalités, ou en soumettant des pull requests.
+Provide guidelines on how people can contribute to your project, whether it's by reporting issues, suggesting features, or submitting pull requests.
 
-## Licence
+## License
 
-Indique la licence sous laquelle ton projet est distribué.
+Specify the license under which your project is distributed.
