@@ -88,6 +88,10 @@ cd build
 node server.js
 ```
 
+## Hosting 
+
+For hosting, I recommend using [Cyclic.sh](https://cyclic.sh/), which offers a free plan. Visit their website for more information.
+
 ## How to Contribute
 
 Provide guidelines on how people can contribute to your project, whether it's by reporting issues, suggesting features, or submitting pull requests.
