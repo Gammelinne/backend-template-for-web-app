@@ -53,7 +53,7 @@ The template is specifically designed to handle user management, providing a rob
 
 ## Configuration and Usage
 
-Refer to the doc of AdonisJS
+*Refer to the AdonisJS doc for more information*
 
 ### Add environnement variables and create database
 
