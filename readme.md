@@ -4,7 +4,7 @@ This project serves as a foundational template for web applications. Originally 
 
 ## Project Overview
 
-The template is specifically designed to handle user management, providing a robust system for user authentication and logging. Its modular structure, based on the [AdonisJS framework}(https://adonisjs.com/), ensures scalability and ease of customization.
+The template is specifically designed to handle user management, providing a robust system for user authentication and logging. Its modular structure, based on the [AdonisJS framework](https://adonisjs.com/), ensures scalability and ease of customization.
 
 ## Current Features
 
