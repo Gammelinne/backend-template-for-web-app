@@ -53,7 +53,20 @@ The template is specifically designed to handle user management, providing a rob
 
 ## Configuration and Usage
 
-Explain how to configure and use the project. Include dependencies and installation steps.
+### Add environnement variables
+
+
+### Run project
+1. **Database Migration:**
+   ```bash
+     node ace migration:run
+   ```
+   
+2. **Database seeding**
+3. 
+4. **Build project**
+5. **Run Project Locally**
+  
 
 ## How to Contribute
 
