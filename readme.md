@@ -96,3 +96,8 @@ node server.js
 ## Hosting 
 
 For hosting, I recommend using [Cyclic.sh](https://cyclic.sh/), which offers a free plan. Visit their website for more information.
+
+## Vulnerability Notice
+
+The latest update of `@adonisjs/assembler` is version 9.5.6. However, it utilizes `cpy@8.1.2`, which has critical vulnerabilities affecting prototype pollution and regular expression denial of service (ReDoS). Attempting to change the `cpy` version as advised at the URL: [Snyk Report](https://snyk.io/test/github/adonisjs/assembler?targetFile=package.json) may not resolve the issue within the AdonisJS context. Nevertheless, I continue to keep the project up-to-date in anticipation of a future fix.
+
