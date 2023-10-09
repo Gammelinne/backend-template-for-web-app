@@ -57,12 +57,17 @@ The template is specifically designed to handle user management, providing a rob
 
 ### Add environnement variables and create database
 
-1. **Database run migration of tables:**
+
+1. **Setup Environment Variables:**
+   - Create a `.env` file in the root of the project.
+   - Replace the values in the `.env.example` file with the actual values.
+
+2. **Database run migration of tables:**
    ```bash
    node ace migration:run
    ```
    
-2. **Database seeding**
+3. **Database seeding**
     ```bash
     node migration:fresh --seed
     ```
@@ -91,11 +96,3 @@ node server.js
 ## Hosting 
 
 For hosting, I recommend using [Cyclic.sh](https://cyclic.sh/), which offers a free plan. Visit their website for more information.
-
-## How to Contribute
-
-Provide guidelines on how people can contribute to your project, whether it's by reporting issues, suggesting features, or submitting pull requests.
-
-## License
-
-Specify the license under which your project is distributed.
