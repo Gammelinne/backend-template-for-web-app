@@ -16,25 +16,25 @@ The template is specifically designed to handle user management, providing a rob
    - Secure storage of passwords using hashing.
 
 ### Testing
-3. **Cypress Automated Tests**
+1. **Cypress Automated Tests**
    - Integration of automated tests using Cypress.
 
 ### Code Quality
-4. **Prettier Integration**
+1. **Prettier Integration**
    - Use of Prettier for automatic code formatting.
 
-5. **Linting**
+2. **Linting**
    - Integration of a linting tool to ensure code uniformity.
 
 ### Database Management
-6. **Migration for Table Creation**
+1. **Migration for Table Creation**
    - Creation of tables (users, posts, api_token) through migrations.
 
-7. **Seeder for Local Testing**
+2. **Seeder for Local Testing**
    - Use of seeders with factories to facilitate local testing.
 
 ### Project Organization
-8. **MVC Model and Validation Files**
+1. **MVC Model and Validation Files**
    - Project organization based on the MVC model.
    - Validation files to ensure proper data types.
 
