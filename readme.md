@@ -1,3 +1,5 @@
+# FR
+
 # Nom du Projet
 
 Description courte et pertinente du projet.
