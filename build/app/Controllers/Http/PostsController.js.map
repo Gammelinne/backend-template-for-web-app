@@ -1,1 +1,0 @@
-{"version":3,"file":"PostsController.js","sourceRoot":"","sources":["../../../../app/Controllers/Http/PostsController.ts"],"names":[],"mappings":";;;;;AACA,iFAAkC;AAClC,MAAqB,eAAe;IAE3B,KAAK,CAAC,KAAK,CAAC,EAAE,QAAQ,EAAuB;QAClD,MAAM,KAAK,GAAG,MAAM,cAAI,CAAC,GAAG,EAAE,CAAA;QAC9B,OAAO,QAAQ,CAAC,IAAI,CAAC,KAAK,CAAC,CAAA;IAC7B,CAAC;CACF;AAND,kCAMC"}
