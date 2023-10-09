@@ -53,20 +53,40 @@ The template is specifically designed to handle user management, providing a rob
 
 ## Configuration and Usage
 
-### Add environnement variables
+Refer to the doc of AdonisJS
 
+### Add environnement variables and create database
 
-### Run project
-1. **Database Migration:**
+1. **Database run migration of tables:**
    ```bash
-     node ace migration:run
+   node ace migration:run
    ```
    
 2. **Database seeding**
-3. 
-4. **Build project**
-5. **Run Project Locally**
-  
+    ```bash
+    node migration:fresh --seed
+    ```
+
+### Run project
+
+#### Locally
+
+**Starting the development server**
+```bash
+node ace serve --watch
+```
+
+#### Production 
+
+1. **Build project**
+   ```bash
+   node ace build --production
+   ```
+2. **Run Project**
+  ```bash
+cd build
+node server.js
+```
 
 ## How to Contribute
 
