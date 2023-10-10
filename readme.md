@@ -16,8 +16,8 @@ The template is specifically designed to handle user management, providing a rob
    - Secure storage of passwords using hashing.
 
 ### Testing
-1. **Cypress Automated Tests**
-   - Integration of automated tests using Cypress.
+1. **Japa Automated Tests**
+   - Integration of automated tests using Japa.
 
 ### Code Quality
 1. **Prettier Integration**
