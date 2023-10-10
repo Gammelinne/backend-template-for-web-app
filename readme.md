@@ -18,6 +18,7 @@ The template is specifically designed to handle user management, providing a rob
    - Secure storage of passwords using hashing.
 
 ### Testing
+
 1. **Japa Automated Tests**
    - Integration of automated tests using Japa.
 
@@ -73,13 +74,13 @@ _Refer to the AdonisJS doc for more information_
    - Replace the values in the `.env.example` file with the actual values.
 
 2. **Database run migration of tables:**
-   ```bash
-   node ace migration:run
-   ```
+```bash
+node ace migration:run
+```
 3. **Database seeding**
-   ```bash
-   node migration:fresh --seed
-   ```
+```bash
+node migration:fresh --seed
+```
 
 ### Run project
 
@@ -94,9 +95,9 @@ node ace serve --watch
 #### Production
 
 1. **Build project**
-   ```bash
-   node ace build --production
-   ```
+```bash
+node ace build --production
+```
 2. **Run Project**
 
 ```bash
