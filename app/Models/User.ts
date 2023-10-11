@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
-
+import VerifyEmail from 'App/Mailers/VerifyEmail'
 export default class User extends BaseModel {
   @column({ isPrimary: true })
   public id: string
@@ -20,9 +20,20 @@ export default class User extends BaseModel {
   @column({ columnName: 'is_admin' })
   public is_admin: boolean
 
+  @column.dateTime({ columnName: 'email_verified_at' })
+  public email_verified_at?: DateTime
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  public verifyEmail() {
+    new VerifyEmail(this).send()
+  }
+
+  public resetPassword() {
+    // Send password reset email
+  }
 }

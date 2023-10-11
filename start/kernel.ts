@@ -32,11 +32,12 @@ Server.middleware.register([() => import('@ioc:Adonis/Core/BodyParser')])
 |
 | { auth: () => import('App/Middleware/Auth') }
 |
-| and then use it as follows
+| and then use it as follows inside a route definition:
 |
-| Route.get('dashboard', 'UserController.dashboard').middleware('auth')
+| Route.get().middleware('auth')
 |
 */
 Server.middleware.registerNamed({
   auth: () => import('App/Middleware/Auth'),
+  throttle: () => import('@adonisjs/limiter/build/throttle'),
 })

@@ -26,12 +26,23 @@ import Route from '@ioc:Adonis/Core/Route'
 |--------------------------------------------------------------------------
 |
 |   You don't need to be authenticated to access the routes below
+|   To avoid spam, the routes below are limited by the global limiter (see ./limiter.ts)
 |
 */
 
-// User routes
-Route.post('/register', 'UsersController.register')
-Route.post('/login', 'UsersController.login')
+/* Auth routes */
+Route.post('/register', 'AuthController.register').middleware('throttle:global') // Request body : { username: string, email: string, password: string, password_confirmation: string }
+Route.post('/login', 'AuthController.login').middleware('throttle:global') // Request body : { email: string, password: string }
+Route.get('/reset-password/', 'AuthController.resetPassword').middleware('throttle:global') // Request body : { token: string, password: string }
+
+/* Mail routes */
+Route.get('/verify-email/', 'MailsController.verifyEmail').middleware('throttle:global') // Request body : { token: string }
+Route.post('/resend-verification-email', 'MailsController.resendVerificationEmail').middleware(
+  'throttle:global'
+) // Request body : { email: string }
+Route.post('/reset-password-email', 'MailsController.resetPasswordEmail').middleware(
+  'throttle:global'
+) // Request body : { email: string }
 
 /*
 |--------------------------------------------------------------------------
@@ -46,5 +57,10 @@ Route.post('/login', 'UsersController.login')
 |
 */
 
-// Post routes
-Route.get('/posts', 'PostsController.index').middleware('auth')
+/* Auth routes */
+Route.post('/logout', 'AuthController.logout').middleware(['auth', 'throttle:global']) // Request body : { token: string }
+
+/* User routes */
+
+/* Post routes */
+Route.get('/posts', 'PostsController.index').middleware(['auth', 'throttle:global']) // Request body : { page: number, perPage: number }
