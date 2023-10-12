@@ -25,6 +25,7 @@ import User from 'App/Models/User'
 */
 
 var user = UserFactory.make()
+var password = 'Testbob14@'
 /* User Tests */
 
 test('Registration and verification email Test with Dummy User', async ({ client, assert }) => {
@@ -35,7 +36,7 @@ test('Registration and verification email Test with Dummy User', async ({ client
     .post(
       `/register?username=${(await user).username}&email=${
         (await user).email
-      }&password=Testbob14@&password_confirmation=Testbob14@`
+      }&password=${password}&password_confirmation=${password}`
     )
     .send()
   register.assertStatus(201)
@@ -61,7 +62,7 @@ test('Registration and verification email Test with Dummy User', async ({ client
 
 test('Login Test with Dummy User', async ({ client }) => {
   const response = await client
-    .post(`/login?email=${(await user).email}&password=Testbob14@`)
+    .post(`/login?email=${(await user).email}&password=${password}`)
     .send()
   response.assertStatus(200)
   response.assertTextIncludes('token')
