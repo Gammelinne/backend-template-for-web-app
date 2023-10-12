@@ -43,19 +43,20 @@ test('Registration and verification email Test with Dummy User', async ({ client
 
   /* Verify Email */
   assert.isTrue(mailer.exists({ subject: 'Email Verification' }))
-  const token = mailer
-    .filter((mail: MessageSearchNode) => !!mail.html?.includes('token='))
-    .map((mail: MessageSearchNode) => mail.html?.split('token=')[1]?.split('"')[0])
-    .find((token) => !!token)
 
-  assert.exists(token)
+  const verifiedurl = mailer
+    .filter((message) => message.subject === 'Email Verification')[0]
+    .html?.match(/(?<=href=").*?(?=">)/g)?.[0]
+  if (verifiedurl) {
+    const response = await client.get(verifiedurl)
+    response.assertStatus(200)
 
-  const verifyEmail = await client.get(`/verify-email/?token=${token}`).send()
-  verifyEmail.assertStatus(200)
-
-  /* Check if email is verified */
-  const verifiedUser = await User.findBy('email', (await user).email, {})
-  assert.isTrue(!!verifiedUser?.email_verified_at)
+    /* Check if email is verified */
+    const verifiedUser = await User.findBy('email', (await user).email, {})
+    assert.isTrue(!!verifiedUser?.email_verified_at)
+  } else {
+    throw new Error('No verified url found')
+  }
 
   Mail.restore()
 })
