@@ -74,10 +74,13 @@ _Refer to the AdonisJS doc for more information_
    - Replace the values in the `.env.example` file with the actual values.
 
 2. **Database run migration of tables:**
+
 ```bash
 node ace migration:run
 ```
+
 3. **Database seeding**
+
 ```bash
 node migration:fresh --seed
 ```
@@ -95,9 +98,11 @@ node ace serve --watch
 #### Production
 
 1. **Build project**
+
 ```bash
 node ace build --production
 ```
+
 2. **Run Project**
 
 ```bash

@@ -37,5 +37,31 @@
 |   After add to the route the middleware('auth') to protect it
 |
 */
-import './routes/admin'
-import './routes/user'
+import Route from '@ioc:Adonis/Core/Route'
+
+/* User Routes */
+Route.group(() => {
+  Route.get('/users/:id', 'UsersController.show')
+  Route.put('/users/id', 'UsersController.update')
+  Route.delete('/users/:id', 'UsersController.destroy')
+}).middleware(['auth', 'throttle:global'])
+
+/* Auth Routes */
+Route.group(() => {
+  Route.post('/register', 'AuthController.register')
+  Route.post('/login', 'AuthController.login')
+  Route.post('/reset-password/', 'AuthController.resetPassword')
+  Route.post('/logout', 'AuthController.logout').middleware(['auth'])
+}).middleware('throttle:global')
+
+/* Mail Routes */
+Route.group(() => {
+  Route.get('/verify-email/:email', 'MailsController.verifyEmail').as('verifyEmail')
+  Route.post('/resend-verification-email', 'MailsController.resendVerificationEmail')
+  Route.post('/reset-password-email', 'MailsController.resetPasswordEmail')
+}).middleware('throttle:global')
+
+/* Post Routes */
+Route.group(() => {
+  Route.get('/posts', 'PostsController.index')
+}).middleware(['auth', 'throttle:global'])

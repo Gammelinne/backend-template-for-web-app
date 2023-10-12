@@ -1,7 +1,6 @@
 import { test } from '@japa/runner'
 import UserFactory from 'Database/factories/UserFactory'
 import Mail from '@ioc:Adonis/Addons/Mail'
-import { MessageSearchNode } from '@ioc:Adonis/Addons/Mail'
 import User from 'App/Models/User'
 
 /* Creation of a unique user for testing */
