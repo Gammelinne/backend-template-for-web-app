@@ -1,21 +1,16 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Encryption from '@ioc:Adonis/Core/Encryption'
-import Env from '@ioc:Adonis/Core/Env'
 import User from 'App/Models/User'
 import { DateTime } from 'luxon'
 
 export default class MailsController {
-  public async verifyEmail({ request, response }: HttpContextContract) {
-    const decryptedToken = Encryption.decrypt(request.input('token'))
-    if (typeof decryptedToken === 'string') {
-      const userId = decryptedToken.slice(0, 36)
-      await User.findOrFail(userId).then(async (user) => {
-        if (decryptedToken === user.id + Env.get('EMAIL_VERIFICATION_SECRET_KEY')) {
-          user.email_verified_at = DateTime.now()
-          await user.save()
-          response.ok({ message: 'Email verified successfully' })
+  public async verifyEmail({ params, request, response }: HttpContextContract) {
+    if (request.hasValidSignature()) {
+      User.findByOrFail('email', params.email).then(async (user) => {
+        if (user.email_verified_at) {
+          response.badRequest({ message: 'Email already verified' })
         } else {
-          response.badRequest({ message: 'Invalid token' })
+          user.email_verified_at = DateTime.now()
+          await user.save().then(() => response.ok({ message: 'Email verified successfully' }))
         }
       })
     }

@@ -1,8 +1,7 @@
 import { BaseMailer, MessageContract } from '@ioc:Adonis/Addons/Mail'
 import User from 'App/Models/User'
 import Env from '@ioc:Adonis/Core/Env'
-import Encryption from '@ioc:Adonis/Core/Encryption'
-
+import Route from '@ioc:Adonis/Core/Route'
 export default class VerifyEmail extends BaseMailer {
   private user: User
 
@@ -20,10 +19,6 @@ export default class VerifyEmail extends BaseMailer {
    */
   /* Send Email to verify user email */
   public prepare(message: MessageContract) {
-    const token = Encryption.encrypt(
-      this.user.id + Env.get('EMAIL_VERIFICATION_SECRET_KEY'),
-      '15mins'
-    ) //create token with lifetime of 15 minutes
     message
       .from(Env.get('SMTP_USERNAME')) // Set the sender email address
       .to(this.user.email) // Set the recipient email address
@@ -34,7 +29,12 @@ export default class VerifyEmail extends BaseMailer {
         <br> 
         <p>Thank you for registering on Lahyra. Please click on the link below to verify your email address.</p> 
         <br> 
-        <a href="${Env.get('APP_URL')}/verify-email/?token=${token}">Verify Email</a>
+        <a href="${
+          Env.get('APP_URL') +
+          Route.builder().params({ email: this.user.email }).makeSigned('verifyEmail', {
+            expiresIn: '30min',
+          })
+        }">Verify Email</a>
         <br>
         <p>Regards,</p>
         <p>${Env.get('APP_NAME')}</p>

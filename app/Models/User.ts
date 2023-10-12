@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 import VerifyEmail from 'App/Mailers/VerifyEmail'
+import ResetPasswordEmail from 'App/Mailers/ResetPasswordEmail'
 export default class User extends BaseModel {
   @column({ isPrimary: true })
   public id: string
@@ -34,6 +35,6 @@ export default class User extends BaseModel {
   }
 
   public resetPassword() {
-    // Send password reset email
+    new ResetPasswordEmail(this).send()
   }
 }

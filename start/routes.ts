@@ -33,10 +33,12 @@ import Route from '@ioc:Adonis/Core/Route'
 /* Auth routes */
 Route.post('/register', 'AuthController.register').middleware('throttle:global') // Request body : { username: string, email: string, password: string, password_confirmation: string }
 Route.post('/login', 'AuthController.login').middleware('throttle:global') // Request body : { email: string, password: string }
-Route.get('/reset-password/', 'AuthController.resetPassword').middleware('throttle:global') // Request body : { token: string, password: string }
+Route.post('/reset-password/', 'AuthController.resetPassword').middleware('throttle:global') // Request body : { token: string, password: string } // Request body : { token: string, password: string }
 
 /* Mail routes */
-Route.get('/verify-email/', 'MailsController.verifyEmail').middleware('throttle:global') // Request body : { token: string }
+Route.get('/verify-email/:email', 'MailsController.verifyEmail')
+  .middleware('throttle:global')
+  .as('verifyEmail') // Request body : { token: string }
 Route.post('/resend-verification-email', 'MailsController.resendVerificationEmail').middleware(
   'throttle:global'
 ) // Request body : { email: string }

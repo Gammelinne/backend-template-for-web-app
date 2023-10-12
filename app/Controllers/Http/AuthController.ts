@@ -2,9 +2,9 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { v4 as uuidv4 } from 'uuid'
 import Hash from '@ioc:Adonis/Core/Hash'
 import User from 'App/Models/User'
-import Env from '@ioc:Adonis/Core/Env'
 import CreateUserValidator from 'App/Validators/CreateUserValidator'
 import LoginUserValidator from 'App/Validators/LoginUserValidator'
+import Env from '@ioc:Adonis/Core/Env'
 import Encryption from '@ioc:Adonis/Core/Encryption'
 
 export default class AuthController {
@@ -43,7 +43,7 @@ export default class AuthController {
     if (typeof decryptedToken === 'string') {
       const userId = decryptedToken.slice(0, 36)
       await User.findOrFail(userId).then(async (user) => {
-        if (decryptedToken === user.id + Env.get('EMAIL_VERIFICATION_SECRET_KEY')) {
+        if (decryptedToken === user.id + Env.get('PASSWORD_VERIFICATION_SECRET_KEY')) {
           const hashedPassword = await Hash.make(request.input('password'))
           user.password = hashedPassword
           await user.save().then(() => response.ok({ message: 'Password reset successfully' }))

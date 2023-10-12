@@ -47,7 +47,7 @@ export default class ResetPasswordEmail extends BaseMailer {
   /* Send Email to reset user password */
   public prepare(message: MessageContract) {
     const token = Encryption.encrypt(
-      this.user.id + Env.get('EMAIL_VERIFICATION_SECRET_KEY'),
+      this.user.id + Env.get('PASSWORD_VERIFICATION_SECRET_KEY'),
       '15mins'
     ) //create token with lifetime of 15 minutes
     message

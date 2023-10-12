@@ -27,7 +27,7 @@ export default Env.rules({
   APP_NAME: Env.schema.string(),
   APP_URL: Env.schema.string(),
   FRONTEND_URL: Env.schema.string(),
-  EMAIL_VERIFICATION_SECRET_KEY: Env.schema.string(),
+  PASSWORD_VERIFICATION_SECRET_KEY: Env.schema.string(),
   DRIVE_DISK: Env.schema.enum(['local'] as const),
   NODE_ENV: Env.schema.enum(['development', 'production', 'test'] as const),
 })
