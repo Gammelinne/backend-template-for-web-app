@@ -1,5 +1,8 @@
 import { test } from '@japa/runner'
 import UserFactory from 'Database/factories/UserFactory'
+import Mail from '@ioc:Adonis/Addons/Mail'
+import { MessageSearchNode } from '@ioc:Adonis/Addons/Mail'
+import User from 'App/Models/User'
 
 /* Creation of a unique user for testing */
 
@@ -24,27 +27,36 @@ import UserFactory from 'Database/factories/UserFactory'
 var user = UserFactory.make()
 /* User Tests */
 
-test('Registration Test with Dummy User', async ({ client }) => {
-  const response = await client
-    .post(
-      `/register?username=${(await user).username}&email=${
-        (await user).email
-      }&password=Testbob14@&password_confirmation=Testbob14@`
-    )
-    .send()
-  response.assertStatus(201)
-})
+test('Registration and verification email Test with Dummy User', async ({ client, assert }) => {
+  const mailer = Mail.fake()
 
-test('Registration Test with Existing User', async ({ client }) => {
-  //Create fake user
-  const response = await client
+  /* Register User */
+  const register = await client
     .post(
       `/register?username=${(await user).username}&email=${
         (await user).email
       }&password=Testbob14@&password_confirmation=Testbob14@`
     )
     .send()
-  response.assertStatus(400)
+  register.assertStatus(201)
+
+  /* Verify Email */
+  assert.isTrue(mailer.exists({ subject: 'Email Verification' }))
+  const token = mailer
+    .filter((mail: MessageSearchNode) => !!mail.html?.includes('token='))
+    .map((mail: MessageSearchNode) => mail.html?.split('token=')[1]?.split('"')[0])
+    .find((token) => !!token)
+
+  assert.exists(token)
+
+  const verifyEmail = await client.get(`/verify-email/?token=${token}`).send()
+  verifyEmail.assertStatus(200)
+
+  /* Check if email is verified */
+  const verifiedUser = await User.findBy('email', (await user).email, {})
+  assert.isTrue(!!verifiedUser?.email_verified_at)
+
+  Mail.restore()
 })
 
 test('Login Test with Dummy User', async ({ client }) => {
