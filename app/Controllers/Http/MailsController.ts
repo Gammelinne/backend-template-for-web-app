@@ -6,10 +6,10 @@ export default class MailsController {
   public async verifyEmail({ params, request, response }: HttpContextContract) {
     if (request.hasValidSignature()) {
       User.findByOrFail('email', params.email).then(async (user) => {
-        if (user.email_verified_at) {
+        if (user.emailVerifiedAt) {
           response.badRequest({ message: 'Email already verified' })
         } else {
-          user.email_verified_at = DateTime.now()
+          user.emailVerifiedAt = DateTime.now()
           await user.save().then(() => response.ok({ message: 'Email verified successfully' }))
         }
       })
@@ -20,7 +20,7 @@ export default class MailsController {
     const { email } = request.only(['email'])
     await User.findByOrFail('email', email)
       .then(async (user) => {
-        if (user.email_verified_at) {
+        if (user.emailVerifiedAt) {
           response.badRequest({ message: 'Email already verified' })
         } else {
           user.verifyEmail()

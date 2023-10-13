@@ -27,7 +27,7 @@ export default class AuthController {
     const payload = await request.validate(LoginUserValidator) // Validate the request with the LoginUserValidator
     await auth.use('api').revoke() // Revoke all tokens for this user
     const token = await auth.use('api').attempt(payload.email, payload.password) // Attempt to login the user
-    return auth.user?.email_verified_at
+    return auth.user?.emailVerifiedAt
       ? response.ok(token)
       : response.badRequest({ message: 'Email not verified' })
   }

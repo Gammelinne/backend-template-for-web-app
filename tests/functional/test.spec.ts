@@ -52,7 +52,7 @@ test('Registration and verification email Test with Dummy User', async ({ client
 
     /* Check if email is verified */
     const verifiedUser = await User.findBy('email', (await user).email, {})
-    assert.isTrue(!!verifiedUser?.email_verified_at)
+    assert.isTrue(!!verifiedUser?.emailVerifiedAt)
   } else {
     throw new Error('No verified url found')
   }

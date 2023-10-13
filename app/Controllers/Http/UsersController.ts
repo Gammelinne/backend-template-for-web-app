@@ -3,9 +3,13 @@ import User from 'App/Models/User'
 
 export default class UsersController {
   /* Show function to return a single user */
-  public async show({ response, params, bouncer }: HttpContextContract) {
-    await bouncer.with('UserPolicy').authorize('manage', await User.findOrFail(params.id))
-    return response.json(await User.findOrFail(params.id))
+  public async show({ response, auth, params }: HttpContextContract) {
+    const user = await User.findOrFail(params.id)
+    if (auth.user?.id === params.id || auth.user?.isAdmin) {
+      return response.json([user.username, user.email, user.createdAt])
+    } else {
+      return response.json([user.username, user.createdAt])
+    }
   }
   /* Update function to update a single user */
   public async update({ request, response, params, bouncer }: HttpContextContract) {
@@ -20,8 +24,8 @@ export default class UsersController {
   /*
   | Delete function
   |
-  | Note : This function is available to the user and the admin. 
-  | Replace the policy by "if(auth.is_admin)" to make it available only to the admin.
+  | Note : This function is available to the user and the admin. (user can only delete his own account)
+  | Replace the policy by "if(auth.isAdmin)" to make it available only to the admin.
   |
   */
   public async destroy({ response, params, bouncer }: HttpContextContract) {

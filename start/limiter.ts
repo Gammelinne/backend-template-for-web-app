@@ -12,7 +12,7 @@
 import { Limiter } from '@adonisjs/limiter/build/services'
 
 export const { httpLimiters } = Limiter.define('global', ({ auth }) => {
-  if (auth?.user?.is_admin) {
+  if (auth?.user?.isAdmin) {
     return Limiter.allowRequests(50).every('1 min') // Allow 100 requests every minute for admins
   } else if (auth.user) {
     return Limiter.allowRequests(25).every('1 min') // Allow 50 requests every minute for authenticated users
