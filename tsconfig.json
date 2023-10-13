@@ -34,7 +34,6 @@
       "@adonisjs/mail",
       "@adonisjs/limiter",
       "@adonisjs/bouncer",
-      "adonis5-swagger"
     ]
   }
 }
