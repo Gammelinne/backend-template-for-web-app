@@ -9,6 +9,5 @@ export default Factory.define(User, async ({ faker }) => {
     email: faker.internet.email(),
     password: await Hash.make('Password123!'), // Set a default password for all users
     isAdmin: false,
-    remember_me_token: null,
   }
 }).build()

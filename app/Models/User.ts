@@ -21,7 +21,7 @@ export default class User extends BaseModel {
   @column({ columnName: 'is_admin' })
   public isAdmin: boolean
 
-  @column.dateTime({ columnName: 'emailVerifiedAt' })
+  @column.dateTime({ columnName: 'email_verified_at' })
   public emailVerifiedAt?: DateTime
 
   @column.dateTime({ autoCreate: true })
