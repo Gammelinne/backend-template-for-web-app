@@ -59,22 +59,34 @@ The template is specifically designed to handle user management, providing a rob
 ```typescript
 /* User Routes */
 Route.group(() => {
-  // ... existing routes
+  Route.get('/users/:id', 'UsersController.show')
+  Route.put('/users/id', 'UsersController.update')
+  Route.delete('/users/:id', 'UsersController.destroy')
+  Route.post('/users/:id/avatar', 'UsersController.addAvatar')
 }).middleware(['auth', 'throttle:global'])
 
 /* Auth Routes */
 Route.group(() => {
-  // ... existing routes
+  Route.post('/register', 'AuthController.register')
+  Route.post('/login', 'AuthController.login')
+  Route.post('/reset-password/', 'AuthController.resetPassword')
+  Route.post('/logout', 'AuthController.logout').middleware(['auth'])
 }).middleware('throttle:global')
 
 /* Mail Routes */
 Route.group(() => {
-  // ... existing routes
+  Route.get('/verify-email/:email', 'MailsController.verifyEmail').as('verifyEmail')
+  Route.post('/resend-verification-email', 'MailsController.resendVerificationEmail')
+  Route.post('/reset-password-email', 'MailsController.resetPasswordEmail')
 }).middleware('throttle:global')
 
 /* Post Routes */
 Route.group(() => {
-  // ... existing routes
+  Route.get('/posts', 'PostsandCommentsController.index')
+  Route.get('/posts/:id', 'PostsandCommentsController.show')
+  Route.post('/posts', 'PostsandCommentsController.store')
+  Route.put('/posts/:id', 'PostsandCommentsController.update')
+  Route.delete('/posts/:id', 'PostsandCommentsController.destroy')
 }).middleware(['auth', 'throttle:global'])
 ```
 ## Features in Development
