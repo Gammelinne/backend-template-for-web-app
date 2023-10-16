@@ -65,4 +65,8 @@ Route.group(() => {
 /* Post Routes */
 Route.group(() => {
   Route.get('/posts', 'PostsandCommentsController.index')
+  Route.get('/posts/:id', 'PostsandCommentsController.show')
+  Route.post('/posts', 'PostsandCommentsController.store')
+  Route.put('/posts/:id', 'PostsandCommentsController.update')
+  Route.delete('/posts/:id', 'PostsandCommentsController.destroy')
 }).middleware(['auth', 'throttle:global'])
