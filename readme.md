@@ -16,7 +16,15 @@ The template is specifically designed to handle user management, providing a rob
 
 2. **Hashed Passwords**
    - Secure storage of passwords using hashing.
+     
+### Logging
 
+1. **Automatic Log Rotation**
+   - Implementation of a cron job that automatically removes old logs, ensuring efficient log management.
+
+2. **Rate Limiting for Spam Prevention**
+   - Integration of a rate limit mechanism to prevent spam. The global limiter is set to 10 requests per minute (configurable in ./limiter.ts).
+     
 ### Testing
 
 1. **Japa Automated Tests**
@@ -46,16 +54,30 @@ The template is specifically designed to handle user management, providing a rob
    - Project organization based on the MVC model.
    - Validation files to ensure proper data types.
 
+## Routes
+
+```typescript
+/* User Routes */
+Route.group(() => {
+  // ... existing routes
+}).middleware(['auth', 'throttle:global'])
+
+/* Auth Routes */
+Route.group(() => {
+  // ... existing routes
+}).middleware('throttle:global')
+
+/* Mail Routes */
+Route.group(() => {
+  // ... existing routes
+}).middleware('throttle:global')
+
+/* Post Routes */
+Route.group(() => {
+  // ... existing routes
+}).middleware(['auth', 'throttle:global'])
+```
 ## Features in Development
-
-### Email Verification and Password Recovery
-
-1. **Email Verification**
-
-   - Implementation of email verification.
-
-2. **Password Reset**
-   - Addition of password recovery functionality.
 
 ### Localization
 
@@ -66,6 +88,15 @@ The template is specifically designed to handle user management, providing a rob
 
 _Refer to the AdonisJS doc for more information_
 
+### Logging Configuration
+
+1. **Automatic Log Cleanup:**
+
+   - A cron job is set up to automatically remove old logs and ensure efficient log storage.
+
+2. **Rate Limit Configuration:**
+
+   - Global rate limiting is configured to 10 requests per minute to prevent spam. You can adjust this limit in the ./limiter.ts file.
 ### Add environnement variables and create database
 
 1. **Setup Environment Variables:**
