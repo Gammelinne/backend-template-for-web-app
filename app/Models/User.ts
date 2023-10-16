@@ -6,6 +6,12 @@ export default class User extends BaseModel {
   @column({ isPrimary: true })
   public id: string
 
+  @column({ columnName: 'first_name' })
+  public firstName: string
+
+  @column({ columnName: 'last_name' })
+  public lastName: string
+
   @column({ columnName: 'username' })
   public username: string
 

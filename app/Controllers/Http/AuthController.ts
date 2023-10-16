@@ -10,10 +10,13 @@ import Encryption from '@ioc:Adonis/Core/Encryption'
 export default class AuthController {
   /* Register a new user */
   public async register({ request, response }: HttpContextContract) {
-    const { username, email, password } = await request.validate(CreateUserValidator)
+    const { firstName, lastName, username, email, password } =
+      await request.validate(CreateUserValidator)
     const hashedPassword = await Hash.make(password)
     await User.create({
       id: uuidv4(),
+      firstName,
+      lastName,
       username,
       email,
       password: hashedPassword,

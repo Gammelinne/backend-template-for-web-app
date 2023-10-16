@@ -1,4 +1,5 @@
 import type { ApplicationContract } from '@ioc:Adonis/Core/Application'
+import Cron from '../start/cron'
 
 export default class AppProvider {
   constructor(protected app: ApplicationContract) {}
@@ -12,10 +13,13 @@ export default class AppProvider {
   }
 
   public async ready() {
+    await Cron.configure()
+    await Cron.start()
     // App is ready
   }
 
   public async shutdown() {
     // Cleanup, since app is going down
+    Cron.stop()
   }
 }

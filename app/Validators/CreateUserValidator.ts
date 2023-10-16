@@ -24,6 +24,8 @@ export default class CreateUserValidator {
    *    ```
    */
   public schema = schema.create({
+    firstName: schema.string(),
+    lastName: schema.string(),
     username: schema.string([rules.unique({ table: 'users', column: 'username' })]),
     email: schema.string([rules.email(), rules.unique({ table: 'users', column: 'email' })]),
     // Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character

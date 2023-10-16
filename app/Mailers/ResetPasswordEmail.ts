@@ -29,19 +29,11 @@ export default class ResetPasswordEmail extends BaseMailer {
 
   /* 
   | -----------------------------------------------------------------
-  | IMPORTANT NOTE ABOUT THE RESET PASSWORD EMAIL METHOD
-  | -----------------------------------------------------------------
+  | NOTE :
   | This method sends an email to the user with a link to reset their password.
   | The link redirects the user to your frontend project (change url in .env) with a token in the query string.
-  | You need to create method in your frontend project to change the user's password. 
   | Post the token to the backend to reset the user's password in the route "/reset-password/" (body : { token: string, password: string })
-  | If not, you can :
-  |   - Generate a new password in this function and send it to the user in the email (not secure)
-  |   - Delete this method and the ResetPasswordEmail class (if you don't want to use it)
-  | 
-  | ----------------------------------------------------------------- 
-  | If you have some other ideas, feel free to share them !
-  | ----------------------------------------------------------------- 
+  | -----------------------------------------------------------------
   */
 
   /* Send Email to reset user password */
@@ -58,7 +50,9 @@ export default class ResetPasswordEmail extends BaseMailer {
         `
         <p>Hi ${this.user.username},</p> 
         <br> 
-        <p>We received a request to reset your password on Lahyra. If you made this request, click on the link below to reset your password. If you didn't make this request, you can safely ignore this email.</p> 
+        <p>We received a request to reset your password on ${Env.get(
+          'APP_NAME'
+        )}. If you made this request, click on the link below to reset your password. If you didn't make this request, you can safely ignore this email.</p> 
         <br> 
         <a href="${Env.get('FRONTEND_URL')}/reset-password?token=${token}">Reset Password</a>
         <br>

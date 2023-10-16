@@ -44,6 +44,7 @@ Route.group(() => {
   Route.get('/users/:id', 'UsersController.show')
   Route.put('/users/id', 'UsersController.update')
   Route.delete('/users/:id', 'UsersController.destroy')
+  Route.post('/users/:id/avatar', 'UsersController.addAvatar')
 }).middleware(['auth', 'throttle:global'])
 
 /* Auth Routes */
@@ -63,5 +64,5 @@ Route.group(() => {
 
 /* Post Routes */
 Route.group(() => {
-  Route.get('/posts', 'PostsController.index')
+  Route.get('/posts', 'PostsandCommentsController.index')
 }).middleware(['auth', 'throttle:global'])

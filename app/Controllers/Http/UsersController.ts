@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
+import Application from '@ioc:Adonis/Core/Application'
 
 export default class UsersController {
   /* Show function to return a single user */
@@ -33,5 +34,27 @@ export default class UsersController {
     const user = await User.findOrFail(params.id)
     user.delete()
     return response.json({ message: 'User and all data deleted successfully' })
+  }
+
+  public async addAvatar({ request, response, params, bouncer }: HttpContextContract) {
+    await bouncer.with('UserPolicy').authorize('manage', await User.findOrFail(params.id))
+    const user = await User.findOrFail(params.id)
+
+    const avatar = request.file('avatar', {
+      size: '2mb',
+      extnames: ['jpg', 'png', 'jpeg'],
+    })
+
+    if (avatar) {
+      // move avatar to user folder
+      await avatar.moveToDisk(Application.publicPath('uploads/users/avatar'), {
+        name: `${user.id}_avatar.jpg`,
+        overwrite: true,
+      })
+
+      return response.json({ message: 'Avatar added successfully' })
+    } else {
+      return response.badRequest({ message: 'Avatar not found or invalid' })
+    }
   }
 }

@@ -27,7 +27,9 @@ export default class VerifyEmail extends BaseMailer {
         `
         <p>Hi ${this.user.username},</p> 
         <br> 
-        <p>Thank you for registering on Lahyra. Please click on the link below to verify your email address.</p> 
+        <p>Thank you for registering on ${Env.get(
+          'APP_NAME'
+        )}. Please click on the link below to verify your email address.</p> 
         <br> 
         <a href="${
           Env.get('APP_URL') +

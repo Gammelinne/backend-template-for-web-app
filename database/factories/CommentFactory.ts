@@ -7,6 +7,6 @@ export default Factory.define(PostAndComment, async ({ faker }) => {
     id: faker.string.uuid(),
     body: faker.lorem.paragraphs(1),
     user_id: (await User.query().orderByRaw('RAND()').firstOrFail()).id,
-    post_id: null,
+    post_id: (await PostAndComment.query().orderByRaw('RAND()').firstOrFail()).id,
   }
 }).build()
