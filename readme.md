@@ -16,15 +16,16 @@ The template is specifically designed to handle user management, providing a rob
 
 2. **Hashed Passwords**
    - Secure storage of passwords using hashing.
-     
+
 ### Logging
 
 1. **Automatic Log Rotation**
+
    - Implementation of a cron job that automatically removes old logs, ensuring efficient log management.
 
 2. **Rate Limiting for Spam Prevention**
    - Integration of a rate limit mechanism to prevent spam. The global limiter is set to 10 requests per minute (configurable in ./limiter.ts).
-     
+
 ### Testing
 
 1. **Japa Automated Tests**
@@ -89,6 +90,7 @@ Route.group(() => {
   Route.delete('/posts/:id', 'PostsandCommentsController.destroy')
 }).middleware(['auth', 'throttle:global'])
 ```
+
 ## Features in Development
 
 ### Localization
@@ -109,6 +111,7 @@ _Refer to the AdonisJS doc for more information_
 2. **Rate Limit Configuration:**
 
    - Global rate limiting is configured to 10 requests per minute to prevent spam. You can adjust this limit in the ./limiter.ts file.
+
 ### Add environnement variables and create database
 
 1. **Setup Environment Variables:**
