@@ -4,14 +4,26 @@ import Application from '@ioc:Adonis/Core/Application'
 
 export default class UsersController {
   /* Show function to return a single user */
-  public async show({ response, auth, params }: HttpContextContract) {
-    const user = await User.findOrFail(params.id)
-    if (auth.user?.id === params.id || auth.user?.isAdmin) {
-      return response.json([user.username, user.email, user.createdAt])
-    } else {
-      return response.json([user.username, user.createdAt])
+  public async show({ response, request, auth }: HttpContextContract) {
+    let userId = request.input('id')
+
+    if (auth.user?.isAdmin && userId) {
+      const user = await User.findOrFail(userId)
+      return response.json({
+        username: user.username,
+        email: user.email,
+        createdAt: user.createdAt,
+      })
+    } else if (auth.user) {
+      const user = await User.findOrFail(auth.user.id)
+      return response.json({
+        username: user.username,
+        email: user.email,
+        createdAt: user.createdAt,
+      })
     }
   }
+
   /* Update function to update a single user */
   public async update({ request, response, params, bouncer }: HttpContextContract) {
     await bouncer.with('UserPolicy').authorize('manage', await User.findOrFail(params.id))

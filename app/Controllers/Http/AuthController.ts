@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from 'uuid'
 import Hash from '@ioc:Adonis/Core/Hash'
 import User from 'App/Models/User'
 import CreateUserValidator from 'App/Validators/CreateUserValidator'
-import LoginUserValidator from 'App/Validators/LoginUserValidator'
 import Env from '@ioc:Adonis/Core/Env'
 import Encryption from '@ioc:Adonis/Core/Encryption'
 
@@ -27,12 +26,21 @@ export default class AuthController {
 
   /* Login a user */
   public async login({ request, response, auth }: HttpContextContract) {
-    const payload = await request.validate(LoginUserValidator) // Validate the request with the LoginUserValidator
     await auth.use('api').revoke() // Revoke all tokens for this user
-    const token = await auth.use('api').attempt(payload.email, payload.password) // Attempt to login the user
-    return auth.user?.emailVerifiedAt
-      ? response.ok(token)
-      : response.badRequest({ message: 'Email not verified' })
+    try {
+      const { email, password } = request.body()
+      const token = await auth.use('api').attempt(email, password) // Attempt to login the user
+
+      return auth.user?.emailVerifiedAt
+        ? response.ok({
+            token: token.toJSON(),
+            user: auth.user?.toJSON(),
+          })
+        : response.badRequest({ message: 'Email not verified' })
+    } catch (error) {
+      // En cas d'échec de l'authentification, retourne une erreur générique
+      return response.unauthorized({ message: 'Invalid credentials' })
+    }
   }
 
   /* Logout a user */

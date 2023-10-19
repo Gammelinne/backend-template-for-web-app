@@ -41,7 +41,7 @@ import Route from '@ioc:Adonis/Core/Route'
 
 /* User Routes */
 Route.group(() => {
-  Route.get('/users/:id', 'UsersController.show')
+  Route.get('/users', 'UsersController.show')
   Route.put('/users/id', 'UsersController.update')
   Route.delete('/users/:id', 'UsersController.destroy')
   Route.post('/users/:id/avatar', 'UsersController.addAvatar')
