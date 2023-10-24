@@ -1,7 +1,5 @@
 import Ws from 'App/Services/Ws'
 import User from 'App/Models/User'
-import Log from 'App/Models/Log'
-import { v4 as uuidv4 } from 'uuid'
 Ws.boot()
 
 /*
