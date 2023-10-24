@@ -45,7 +45,7 @@ export default class ResetPasswordEmail extends BaseMailer {
     message
       .from(Env.get('SMTP_USERNAME')) // Set the sender email address
       .to(this.user.email) // Set the recipient email address
-      .subject('Email Verification') // Set the subject of the email
+      .subject('Reset your password') // Set the subject of the email
       .html(
         `
         <p>Hi ${this.user.username},</p> 

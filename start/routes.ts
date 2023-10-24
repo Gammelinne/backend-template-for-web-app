@@ -41,8 +41,8 @@ import Route from '@ioc:Adonis/Core/Route'
 
 /* User Routes */
 Route.group(() => {
-  Route.get('/users', 'UsersController.show')
-  Route.put('/users/id', 'UsersController.update')
+  Route.get('/users/me', 'UsersController.showMe')
+  Route.put('/users/:id', 'UsersController.update')
   Route.delete('/users/:id', 'UsersController.destroy')
   Route.post('/users/:id/avatar', 'UsersController.addAvatar')
 }).middleware(['auth', 'throttle:global'])
@@ -51,7 +51,7 @@ Route.group(() => {
 Route.group(() => {
   Route.post('/register', 'AuthController.register')
   Route.post('/login', 'AuthController.login')
-  Route.post('/reset-password/', 'AuthController.resetPassword')
+  Route.post('/reset-password', 'AuthController.resetPassword')
   Route.post('/logout', 'AuthController.logout').middleware(['auth'])
 }).middleware('throttle:global')
 

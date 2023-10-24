@@ -4,22 +4,22 @@ import Application from '@ioc:Adonis/Core/Application'
 
 export default class UsersController {
   /* Show function to return a single user */
-  public async show({ response, request, auth }: HttpContextContract) {
+  public async showMe({ response, request, auth }: HttpContextContract) {
     let userId = request.input('id')
 
     if (auth.user?.isAdmin && userId) {
       const user = await User.findOrFail(userId)
       return response.json({
+        id: user.id,
         username: user.username,
         email: user.email,
-        createdAt: user.createdAt,
       })
     } else if (auth.user) {
       const user = await User.findOrFail(auth.user.id)
       return response.json({
+        id: user.id,
         username: user.username,
         email: user.email,
-        createdAt: user.createdAt,
       })
     }
   }

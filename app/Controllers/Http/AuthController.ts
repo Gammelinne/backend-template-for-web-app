@@ -5,6 +5,7 @@ import User from 'App/Models/User'
 import CreateUserValidator from 'App/Validators/CreateUserValidator'
 import Env from '@ioc:Adonis/Core/Env'
 import Encryption from '@ioc:Adonis/Core/Encryption'
+import ResetPasswordValidator from 'App/Validators/ResetPasswordValidator'
 
 export default class AuthController {
   /* Register a new user */
@@ -12,8 +13,9 @@ export default class AuthController {
     const { firstName, lastName, username, email, password } =
       await request.validate(CreateUserValidator)
     const hashedPassword = await Hash.make(password)
+    const id = uuidv4()
     await User.create({
-      id: uuidv4(),
+      id,
       firstName,
       lastName,
       username,
@@ -21,7 +23,7 @@ export default class AuthController {
       password: hashedPassword,
     })
       .then((user) => user.verifyEmail())
-      .finally(() => response.created({ message: 'User registered successfully' }))
+      .then(() => response.created({ message: 'User created successfully', userId: id }))
   }
 
   /* Login a user */
@@ -55,7 +57,8 @@ export default class AuthController {
       const userId = decryptedToken.slice(0, 36)
       await User.findOrFail(userId).then(async (user) => {
         if (decryptedToken === user.id + Env.get('PASSWORD_VERIFICATION_SECRET_KEY')) {
-          const hashedPassword = await Hash.make(request.input('password'))
+          const { password } = await request.validate(ResetPasswordValidator)
+          const hashedPassword = await Hash.make(password)
           user.password = hashedPassword
           await user.save().then(() => response.ok({ message: 'Password reset successfully' }))
         }

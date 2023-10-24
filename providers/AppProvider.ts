@@ -13,6 +13,7 @@ export default class AppProvider {
   }
 
   public async ready() {
+    await import('../start/socket')
     await Cron.configure()
     await Cron.start()
     // App is ready

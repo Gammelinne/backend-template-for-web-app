@@ -21,8 +21,8 @@ export default class User extends BaseModel {
   @column({ columnName: 'password' })
   public password: string
 
-  @column({ columnName: 'remember_me_token' })
-  public rememberMeToken?: string
+  @column({ columnName: 'avatar' })
+  public avatar: URL
 
   @column({ columnName: 'is_admin' })
   public isAdmin: boolean
