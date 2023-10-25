@@ -26,6 +26,7 @@ export default Env.rules({
   APP_KEY: Env.schema.string(),
   APP_NAME: Env.schema.string(),
   APP_URL: Env.schema.string(),
+  SERVER_RECAPTCHA_KEY: Env.schema.string(),
   FRONTEND_URL: Env.schema.string(),
   PASSWORD_VERIFICATION_SECRET_KEY: Env.schema.string(),
   DRIVE_DISK: Env.schema.enum(['local'] as const),

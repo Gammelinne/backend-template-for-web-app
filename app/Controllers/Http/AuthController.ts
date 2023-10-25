@@ -1,29 +1,53 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { v4 as uuidv4 } from 'uuid'
+import axios from 'axios'
 import Hash from '@ioc:Adonis/Core/Hash'
 import User from 'App/Models/User'
-import CreateUserValidator from 'App/Validators/CreateUserValidator'
 import Env from '@ioc:Adonis/Core/Env'
 import Encryption from '@ioc:Adonis/Core/Encryption'
+import { validator, schema, rules } from '@ioc:Adonis/Core/Validator'
 import ResetPasswordValidator from 'App/Validators/ResetPasswordValidator'
 
 export default class AuthController {
   /* Register a new user */
   public async register({ request, response }: HttpContextContract) {
-    const { firstName, lastName, username, email, password } =
-      await request.validate(CreateUserValidator)
-    const hashedPassword = await Hash.make(password)
-    const id = uuidv4()
-    await User.create({
-      id,
-      firstName,
-      lastName,
-      username,
-      email,
-      password: hashedPassword,
+    const { firstName, lastName, username, email, password } = await validator.validate({
+      schema: schema.create({
+        firstName: schema.string(),
+        lastName: schema.string(),
+        username: schema.string([rules.unique({ table: 'users', column: 'username' })]),
+        email: schema.string([rules.email(), rules.unique({ table: 'users', column: 'email' })]),
+        // Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character
+        password: schema.string([
+          rules.confirmed(),
+          rules.minLength(8),
+          rules.regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/gm),
+        ]),
+      }),
+      data: request.input('newUser'),
     })
-      .then((user) => user.verifyEmail())
-      .then(() => response.created({ message: 'User created successfully', userId: id }))
+    const dataRequest = await axios.post(
+      `https://www.google.com/recaptcha/api/siteverify?secret=${Env.get(
+        'SERVER_RECAPTCHA_KEY'
+      )}&response=${request.input('token')}`
+    )
+    console.log(dataRequest.data)
+    if (dataRequest.data.success) {
+      const hashedPassword = await Hash.make(password)
+      const id = uuidv4()
+      await User.create({
+        id,
+        firstName,
+        lastName,
+        username,
+        email,
+        password: hashedPassword,
+      })
+        .then((user) => user.verifyEmail())
+        .then(() => response.created({ message: 'User created successfully', userId: id }))
+    } else {
+      response.badRequest({ message: 'Token error' })
+    }
   }
 
   /* Login a user */
