@@ -29,9 +29,8 @@ export default class AuthController {
     const dataRequest = await axios.post(
       `https://www.google.com/recaptcha/api/siteverify?secret=${Env.get(
         'SERVER_RECAPTCHA_KEY'
-      )}&response=${request.input('token')}`
+      )}&response=${request.input('recpatchaToken')}`
     )
-    console.log(dataRequest.data)
     if (dataRequest.data.success) {
       const hashedPassword = await Hash.make(password)
       const id = uuidv4()
@@ -54,15 +53,24 @@ export default class AuthController {
   public async login({ request, response, auth }: HttpContextContract) {
     await auth.use('api').revoke() // Revoke all tokens for this user
     try {
-      const { email, password } = request.body()
-      const token = await auth.use('api').attempt(email, password) // Attempt to login the user
+      const dataRequest = await axios.post(
+        `https://www.google.com/recaptcha/api/siteverify?secret=${Env.get(
+          'SERVER_RECAPTCHA_KEY'
+        )}&response=${request.input('recpatchaToken')}`
+      )
+      if (dataRequest.data.success) {
+        const { email, password } = request.body()
+        const token = await auth.use('api').attempt(email, password) // Attempt to login the user
 
-      return auth.user?.emailVerifiedAt
-        ? response.ok({
-            token: token.toJSON(),
-            user: auth.user?.toJSON(),
-          })
-        : response.badRequest({ message: 'Email not verified' })
+        return auth.user?.emailVerifiedAt
+          ? response.ok({
+              token: token.toJSON(),
+              user: auth.user?.toJSON(),
+            })
+          : response.badRequest({ message: 'Email not verified' })
+      } else {
+        response.badRequest({ message: 'Token error' })
+      }
     } catch (error) {
       // En cas d'échec de l'authentification, retourne une erreur générique
       return response.unauthorized({ message: 'Invalid credentials' })
