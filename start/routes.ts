@@ -70,3 +70,8 @@ Route.group(() => {
   Route.put('/posts/:id', 'PostsandCommentsController.update')
   Route.delete('/posts/:id', 'PostsandCommentsController.destroy')
 }).middleware(['auth', 'throttle:global'])
+
+/* Extern call */
+Route.group(() => {
+  Route.post('/google/redirect', 'AuthController.handleGoogleRedirect')
+})

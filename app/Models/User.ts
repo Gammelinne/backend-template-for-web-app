@@ -6,6 +6,9 @@ export default class User extends BaseModel {
   @column({ isPrimary: true })
   public id: string
 
+  @column({ columnName: 'google_id' })
+  public googleId: string
+
   @column({ columnName: 'first_name' })
   public firstName: string
 
@@ -19,7 +22,7 @@ export default class User extends BaseModel {
   public email: string
 
   @column({ columnName: 'password' })
-  public password: string
+  public password: string | null
 
   @column({ columnName: 'avatar' })
   public avatar: URL
@@ -28,7 +31,7 @@ export default class User extends BaseModel {
   public isAdmin: boolean
 
   @column.dateTime({ columnName: 'email_verified_at' })
-  public emailVerifiedAt?: DateTime
+  public emailVerifiedAt?: DateTime | null
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

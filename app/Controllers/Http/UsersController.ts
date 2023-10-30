@@ -12,14 +12,20 @@ export default class UsersController {
       return response.json({
         id: user.id,
         username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
+        avatar: user.avatar,
       })
     } else if (auth.user) {
       const user = await User.findOrFail(auth.user.id)
       return response.json({
         id: user.id,
         username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
+        avatar: user.avatar,
       })
     }
   }
