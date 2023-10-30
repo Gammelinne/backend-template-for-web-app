@@ -54,7 +54,11 @@ The template is specifically designed to handle user management, providing a rob
 1. **MVC Model and Validation Files**
    - Project organization based on the MVC model.
    - Validation files to ensure proper data types.
+   - 
+### Real-time Communication
 
+1. **Socket.io Integration**
+   - Implementation of WebSockets for real-time bidirectional communication.
 ## Routes
 
 ```typescript
