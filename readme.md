@@ -1,6 +1,6 @@
 # Backend template for web application
 
-This project serves as a foundational backend template for web applications. Originally created to streamline the development process by eliminating the need to rewrite common functionalities for each project, it has evolved into a standalone project.
+This project serves as a foundational backend template for web applications. Originally created to streamline the development process by eliminating the need to rewrite common functionalities for each project, it has evolved into a standalone project. Works perfectly with my frontend template project
 
 ## Project Overview
 
