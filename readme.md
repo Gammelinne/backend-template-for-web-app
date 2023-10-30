@@ -104,9 +104,11 @@ Route.group(() => {
 
 ### Localization
 
-3. **I18n for Multilingual Responses**
+1. **I18n for Multilingual Responses**
    - Integration of language management for responses.
-
+2. **Migration to AdonisJS v6 (Upcoming)**
+   - Anticipating the release of AdonisJS v6 in the coming weeks.
+   - Planned migration to AdonisJS v6 as soon as it is officially released, ensuring compatibility and taking advantage of the latest features.
 ## Configuration and Usage
 
 _Refer to the AdonisJS doc for more information_
