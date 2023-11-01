@@ -1,6 +1,6 @@
 # Backend template for web application
 
-This project serves as a foundational backend template for web applications. Originally created to streamline the development process by eliminating the need to rewrite common functionalities for each project, it has evolved into a standalone project.
+This project serves as a foundational backend template for web applications. Originally created to streamline the development process by eliminating the need to rewrite common functionalities for each project, it has evolved into a standalone project. Works perfectly with my frontend template project
 
 ## Project Overview
 
@@ -54,14 +54,18 @@ The template is specifically designed to handle user management, providing a rob
 1. **MVC Model and Validation Files**
    - Project organization based on the MVC model.
    - Validation files to ensure proper data types.
+   - 
+### Real-time Communication
 
+1. **Socket.io Integration**
+   - Implementation of WebSockets for real-time bidirectional communication.
 ## Routes
 
 ```typescript
 /* User Routes */
 Route.group(() => {
-  Route.get('/users/:id', 'UsersController.show')
-  Route.put('/users/id', 'UsersController.update')
+  Route.get('/users/me', 'UsersController.showMe')
+  Route.put('/users/:id', 'UsersController.update')
   Route.delete('/users/:id', 'UsersController.destroy')
   Route.post('/users/:id/avatar', 'UsersController.addAvatar')
 }).middleware(['auth', 'throttle:global'])
@@ -70,7 +74,7 @@ Route.group(() => {
 Route.group(() => {
   Route.post('/register', 'AuthController.register')
   Route.post('/login', 'AuthController.login')
-  Route.post('/reset-password/', 'AuthController.resetPassword')
+  Route.post('/reset-password', 'AuthController.resetPassword')
   Route.post('/logout', 'AuthController.logout').middleware(['auth'])
 }).middleware('throttle:global')
 
@@ -89,15 +93,22 @@ Route.group(() => {
   Route.put('/posts/:id', 'PostsandCommentsController.update')
   Route.delete('/posts/:id', 'PostsandCommentsController.destroy')
 }).middleware(['auth', 'throttle:global'])
+
+/* Extern call */
+Route.group(() => {
+  Route.post('/google/redirect', 'AuthController.handleGoogleRedirect')
+})
 ```
 
 ## Features in Development
 
 ### Localization
 
-3. **I18n for Multilingual Responses**
+1. **I18n for Multilingual Responses**
    - Integration of language management for responses.
-
+2. **Migration to AdonisJS v6 (Upcoming)**
+   - Anticipating the release of AdonisJS v6 in the coming weeks.
+   - Planned migration to AdonisJS v6 as soon as it is officially released, ensuring compatibility and taking advantage of the latest features.
 ## Configuration and Usage
 
 _Refer to the AdonisJS doc for more information_
