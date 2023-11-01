@@ -8,7 +8,6 @@ import Encryption from '@ioc:Adonis/Core/Encryption'
 import { validator, schema, rules } from '@ioc:Adonis/Core/Validator'
 import { DateTime } from 'luxon'
 import ResetPasswordValidator from 'App/Validators/ResetPasswordValidator'
-
 export default class AuthController {
   /* Register new google account */
   public async handleGoogleRedirect({ auth, request, response }: HttpContextContract) {
@@ -33,8 +32,9 @@ export default class AuthController {
           password: null,
           googleId: googleResponse.data.sub,
         })
+      } else if (user && !user.googleId) {
+        return response.badGateway({ message: 'Email already used for a normal account' })
       }
-
       const token = await auth.use('api').login(user)
 
       return response.ok({
@@ -75,6 +75,8 @@ export default class AuthController {
         id,
         firstName,
         lastName,
+        avatar:
+          'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
         username,
         email,
         password: hashedPassword,

@@ -25,7 +25,7 @@ export default class User extends BaseModel {
   public password: string | null
 
   @column({ columnName: 'avatar' })
-  public avatar: URL
+  public avatar: URL | String | null
 
   @column({ columnName: 'is_admin' })
   public isAdmin: boolean
