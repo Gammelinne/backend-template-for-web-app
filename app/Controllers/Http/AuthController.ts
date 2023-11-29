@@ -80,9 +80,7 @@ export default class AuthController {
         username,
         email,
         password: hashedPassword,
-      })
-        .then((user) => user.verifyEmail())
-        .then(() => response.created({ message: 'User created successfully', userId: id }))
+      }).then(() => response.created({ message: 'User created successfully', email: email }))
     } else {
       response.badRequest({ message: 'Token error' })
     }

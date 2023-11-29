@@ -6,28 +6,21 @@ export default class UsersController {
   /* Show function to return a single user */
   public async showMe({ response, request, auth }: HttpContextContract) {
     let userId = request.input('id')
-
+    let user = new User()
     if (auth.user?.isAdmin && userId) {
-      const user = await User.findOrFail(userId)
-      return response.json({
-        id: user.id,
-        username: user.username,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        avatar: user.avatar,
-      })
+      user = await User.findOrFail(userId)
     } else if (auth.user) {
-      const user = await User.findOrFail(auth.user.id)
-      return response.json({
-        id: user.id,
-        username: user.username,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        avatar: user.avatar,
-      })
+      user = await User.findOrFail(auth.user.id)
     }
+    return response.json({
+      id: user.id,
+      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      avatar: user.avatar,
+      emailVerifiedAt: user.emailVerifiedAt,
+    })
   }
 
   /* Update function to update a single user */
