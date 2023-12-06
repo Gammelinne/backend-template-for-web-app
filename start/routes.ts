@@ -42,9 +42,8 @@ import Route from '@ioc:Adonis/Core/Route'
 /* User Routes */
 Route.group(() => {
   Route.get('/users/me', 'UsersController.showMe')
-  Route.put('/users/:id', 'UsersController.update')
-  Route.delete('/users/:id', 'UsersController.destroy')
-  Route.post('/users/:id/avatar', 'UsersController.addAvatar')
+  Route.put('/users/update', 'UsersController.update')
+  Route.delete('/users/delete', 'UsersController.destroy')
 }).middleware(['auth', 'throttle:global'])
 
 /* Auth Routes */
@@ -75,3 +74,19 @@ Route.group(() => {
 Route.group(() => {
   Route.post('/google/redirect', 'AuthController.handleGoogleRedirect')
 })
+
+/* Test relationship */
+
+/*
+Route.get('users/bite/:id', async ({ params, response }) => {
+  const user = await User.findOrFail(params.id)
+
+  // Load Post
+  await user.load('postAndComment')
+
+  // Return User + User Posts
+  return response.ok({
+    user: user,
+  })
+})
+*/

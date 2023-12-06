@@ -19,7 +19,6 @@ export default class AuthController {
       )
 
       let user = await User.query().where('email', googleResponse.data.email).first()
-
       if (!user) {
         user = await User.create({
           id: uuidv4(),
@@ -75,8 +74,7 @@ export default class AuthController {
         id,
         firstName,
         lastName,
-        avatar:
-          'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+        avatar: 'https://zupimages.net/viewer.php?id=23/48/0yi5.png',
         username,
         email,
         password: hashedPassword,
@@ -133,6 +131,16 @@ export default class AuthController {
 
   public async resetPassword({ request, response }: HttpContextContract) {
     const decryptedToken = Encryption.decrypt(request.input('token'))
+    await validator.validate({
+      schema: schema.create({
+        password: schema.string([
+          rules.confirmed(),
+          rules.minLength(8),
+          rules.regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/gm),
+        ]),
+      }),
+      data: request.only(['password', 'password_confirmation']),
+    })
     if (typeof decryptedToken === 'string') {
       const userId = decryptedToken.slice(0, 36)
       await User.findOrFail(userId).then(async (user) => {

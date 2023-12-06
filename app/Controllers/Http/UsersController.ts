@@ -1,7 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
-import Application from '@ioc:Adonis/Core/Application'
-
+import Env from '@ioc:Adonis/Core/Env'
 export default class UsersController {
   /* Show function to return a single user */
   public async showMe({ response, request, auth }: HttpContextContract) {
@@ -24,13 +23,24 @@ export default class UsersController {
   }
 
   /* Update function to update a single user */
-  public async update({ request, response, params, bouncer }: HttpContextContract) {
-    await bouncer.with('UserPolicy').authorize('manage', await User.findOrFail(params.id))
-    const { username, email, password } = request.only(['username', 'email', 'password'])
-    const user = await User.findOrFail(params.id)
-    user.merge({ username, email, password })
-    await user.save()
-    return response.json({ message: 'User updated successfully' })
+  public async update({ request, response, auth }: HttpContextContract) {
+    const user = await User.findOrFail(auth.user?.id)
+    const avatar = request.file('avatar', {
+      size: '3mb',
+      extnames: ['jpg', 'png', 'jpeg'],
+    })
+    if (avatar) {
+      await avatar.moveToDisk('avatars', {
+        name: `${user.id}_avatar.jpg`,
+      })
+      user.avatar = `${Env.get('APP_URL')}/public/avatars/${user.id}_avatar.jpg`
+      await user.save()
+      return response.json({ avatar: user.avatar })
+    } else {
+      const { username, email, password } = request.only(['username', 'email', 'password'])
+      user.merge({ username, email, password })
+      await user.save()
+    }
   }
 
   /*
@@ -45,27 +55,5 @@ export default class UsersController {
     const user = await User.findOrFail(params.id)
     user.delete()
     return response.json({ message: 'User and all data deleted successfully' })
-  }
-
-  public async addAvatar({ request, response, params, bouncer }: HttpContextContract) {
-    await bouncer.with('UserPolicy').authorize('manage', await User.findOrFail(params.id))
-    const user = await User.findOrFail(params.id)
-
-    const avatar = request.file('avatar', {
-      size: '2mb',
-      extnames: ['jpg', 'png', 'jpeg'],
-    })
-
-    if (avatar) {
-      // move avatar to user folder
-      await avatar.moveToDisk(Application.publicPath('uploads/users/avatar'), {
-        name: `${user.id}_avatar.jpg`,
-        overwrite: true,
-      })
-
-      return response.json({ message: 'Avatar added successfully' })
-    } else {
-      return response.badRequest({ message: 'Avatar not found or invalid' })
-    }
   }
 }

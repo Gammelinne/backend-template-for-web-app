@@ -53,8 +53,7 @@ export default driveConfig({
       | files.
       |
       */
-      root: Application.tmpPath('uploads'),
-
+      root: Application.publicPath(),
       /*
       |--------------------------------------------------------------------------
       | Serve files - Local driver only
@@ -77,7 +76,7 @@ export default driveConfig({
       | you are not registering routes with this prefix.
       |
       */
-      basePath: '/uploads',
+      basePath: '/public',
     },
 
     /*
