@@ -1,3 +1,3 @@
-release: ENV_SILENT=true node ace migration:run --force
+release: sh ./release.sh
 
 web: npm run start
